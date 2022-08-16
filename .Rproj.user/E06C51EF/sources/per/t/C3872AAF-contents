@@ -2,6 +2,7 @@ rm(list=ls())
 if(!is.null(dev.list())) dev.off()
 library(ggplot2)
 library(tidyverse)
+library(ggpubr)
 
 cd <- read.csv("csv_density.csv", header=TRUE)
 rownames(cd) <- cd[,1]
@@ -53,3 +54,14 @@ graph_diameter_density <- ggplot(dd, aes(x=component_size, y=subgraph_density)) 
 graph_diameter_order <- ggplot(dd, aes(x=component_size, y=component_diameter)) + 
   geom_point() + 
   scale_x_log10()
+
+corr_size_density <- ggscatter(dd, x = "component_size", y = "subgraph_density", 
+                                add = "reg.line", conf.int = TRUE,
+                                cor.coef = TRUE, cor.method = "pearson") + 
+  scale_x_log10() + 
+  scale_y_log10()
+
+corr_size_diameter <- ggscatter(dd, x = "component_size", y = "component_diameter", 
+          add = "reg.line", conf.int = TRUE,
+          cor.coef = TRUE, cor.method = "pearson") + scale_x_log10()
+
