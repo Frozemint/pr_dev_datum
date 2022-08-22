@@ -56,12 +56,19 @@ graph_diameter_order <- ggplot(dd, aes(x=component_size, y=component_diameter)) 
   scale_x_log10()
 
 corr_size_density <- ggscatter(dd, x = "component_size", y = "subgraph_density", 
-                                add = "reg.line", conf.int = TRUE,
-                                cor.coef = TRUE, cor.method = "pearson") + 
-  scale_x_log10() + 
-  scale_y_log10()
+                                add = "none", conf.int = FALSE,
+                                cor.coef = FALSE, cor.method = "pearson") + 
+  scale_x_log10() +
+  geom_function(fun = function(x) 1/x)
 
 corr_size_diameter <- ggscatter(dd, x = "component_size", y = "component_diameter", 
-          add = "reg.line", conf.int = TRUE,
-          cor.coef = TRUE, cor.method = "pearson") + scale_x_log10()
+          add = "none", conf.int = FALSE,
+          cor.coef = FALSE, cor.method = "pearson") + 
+  scale_x_log10() + 
+  #geom_abline(intercept = 1, slope = 1) +
+  geom_function(fun = function(x) x - 1, ) +
+  ylim(0, 50)
+
+plot(corr_size_diameter)
+plot(corr_size_density)
 
