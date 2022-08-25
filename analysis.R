@@ -69,6 +69,17 @@ corr_size_diameter <- ggscatter(dd, x = "component_size", y = "component_diamete
   geom_function(fun = function(x) x - 1, ) +
   ylim(0, 50)
 
-plot(corr_size_diameter)
-plot(corr_size_density)
+#-------------
+
+gs = read.csv("csv_component_size.csv", header=TRUE)
+rownames(gs) = gs[, 1]
+gs[,1] = NULL
+
+component_size_plot <- ggplot(gs, aes(component_size)) + geom_bar(fill = "#0073C2FF") +
+  theme_pubclean()
+
+component_size_plot[component_size_plot$data == 0] <- NA
+
+#plot(corr_size_diameter)
+#plot(corr_size_density)
 
